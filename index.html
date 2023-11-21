@@ -1,77 +1,45 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registration Form</title>
-  <style>
-    label {
-      display: block;
-      margin-bottom: 5px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <script src="index.js" defer></script> <!-- Include index.js -->
 </head>
 <body>
 
-  <h2>Registration Form</h2>
+    <form id="registrationForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
 
-  <form id="registrationForm">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
 
-    <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" name="dob" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" required>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" onchange="validateDateOfBirth()" required>
 
-    <button type="button" onclick="saveData()">Save</button>
-    <button type="button" onclick="loadData()">Load</button>
-  </form>
+        <label for="acceptTerms">Accept Terms:</label>
+        <input type="checkbox" id="acceptTerms" required>
 
-  <script>
-    function saveData() {
-      const name = document.getElementById('name').value;
-      const dob = document.getElementById('dob').value;
-      const email = document.getElementById('email').value;
+        <button type="submit">Submit</button>
+    </form>
 
-      // Additional validation for age (18 to 55)
-      const age = calculateAge(new Date(dob));
-      if (age < 18 || age > 55) {
-        alert('Age must be between 18 and 55.');
-        return;
-      }
-
-      const userData = { name, dob, email };
-      localStorage.setItem('userData', JSON.stringify(userData));
-      alert('Data saved successfully!');
-    }
-
-    function loadData() {
-      const userData = JSON.parse(localStorage.getItem('userData'));
-      if (userData) {
-        document.getElementById('name').value = userData.name;
-        document.getElementById('dob').value = userData.dob;
-        document.getElementById('email').value = userData.email;
-        alert('Data loaded successfully!');
-      } else {
-        alert('No saved data found.');
-      }
-    }
-
-    function calculateAge(birthDate) {
-      const currentDate = new Date();
-      const age = currentDate.getFullYear() - birthDate.getFullYear();
-      const monthDiff = currentDate.getMonth() - birthDate.getMonth();
-      
-      if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDate.getDate())) {
-        return age - 1;
-      } else {
-        return age;
-      }
-    }
-  </script>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Dob</th>
+                <th>Accepted terms?</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
 
 </body>
 </html>
-
